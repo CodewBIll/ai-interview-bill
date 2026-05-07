@@ -177,7 +177,7 @@ export default function SetupForm() {
             : 'bg-white/5 text-gray-600 cursor-not-allowed'
         }`}
       >
-        {isSubmitting ? 'Menyiapkan Interview...' : '🚀 Mulai Interview'}
+        {isSubmitting ? 'Menyiapkan Interview...' : 'Mulai Interview'}
       </button>
     </div>
   );
