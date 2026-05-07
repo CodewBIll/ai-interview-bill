@@ -1,0 +1,19 @@
+
+> ai-interview-coach@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 19916, using available port 3001 instead.
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://172.16.15.39:3001
+- Environments: .env.local
+✓ Ready in 527ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          19916
+- Dir:          C:\Users\ADVAN\OneDrive\Desktop\Portofolio\ai-interview-coach
+- Log:          .next\dev\logs\next-development.log
+
+Run taskkill /PID 19916 /F to stop it.
+[?25h
