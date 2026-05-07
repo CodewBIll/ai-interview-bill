@@ -54,8 +54,16 @@ export default function DashboardPage() {
       {/* Nav */}
       <nav className="w-full px-6 py-4 flex items-center justify-between border-b border-white/5">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white text-sm font-bold">AI</div>
-          <span className="text-white font-semibold text-lg">Interview Coach</span>
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center overflow-hidden">
+            <img
+              src="/logo.png"
+              alt="logo"
+              className="w-full h-full object-contain filter invert brightness-150 opacity-70"
+            />
+          </div>
+          <span className="text-white font-semibold text-lg">
+            Boach AI
+          </span>
         </Link>
         <Link href="/interview" className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors">
           + Interview Baru
