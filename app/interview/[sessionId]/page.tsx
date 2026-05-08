@@ -60,6 +60,7 @@ export default function InterviewSessionPage() {
 
     hasInitialized.current = true;
     setIsLoading(true);
+    setError('');
 
     try {
       const init: Message[] = [
@@ -106,6 +107,7 @@ export default function InterviewSessionPage() {
         },
       ]);
     } catch (err) {
+      hasInitialized.current = false;
       setError(err instanceof Error ? err.message : 'Gagal memulai interview.');
     } finally {
       setIsLoading(false);
@@ -113,7 +115,13 @@ export default function InterviewSessionPage() {
   }, [session, sessionId]);
 
   useEffect(() => {
-    fetchFirstQuestion();
+    const timer = window.setTimeout(() => {
+      void fetchFirstQuestion();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
   }, [fetchFirstQuestion]);
 
   // ================= SUBMIT ANSWER =================
@@ -266,7 +274,18 @@ export default function InterviewSessionPage() {
 
       {error && (
         <div className="mx-6 mt-4 p-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-center">
-          {error}
+          <p>{error}</p>
+          {!chatItems.length && !isLoading && (
+            <button
+              type="button"
+              onClick={() => {
+                fetchFirstQuestion();
+              }}
+              className="mt-3 rounded-lg border border-red-400/30 px-4 py-2 text-sm text-red-300 transition hover:bg-red-500/10"
+            >
+              Coba lagi
+            </button>
+          )}
         </div>
       )}
 
