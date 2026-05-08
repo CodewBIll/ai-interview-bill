@@ -52,7 +52,7 @@ export default function HomePage() {
             Latih Interview{' '}
             <span className="gradient-text">Teknis Kamu</span>
             <br />
-            dengan AI Coach
+            dengan Interva AI
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
