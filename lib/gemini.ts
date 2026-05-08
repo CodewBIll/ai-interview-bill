@@ -49,11 +49,18 @@ export async function callInterview(
 
 function cleanJsonResponse(text: string): string {
   // Remove markdown code fences if Gemini wraps the JSON in them
-  const cleaned = text
+  let cleaned = text
     .replace(/^```json\s*/i, "")
     .replace(/^```\s*/i, "")
     .replace(/\s*```$/i, "")
     .trim();
+
+  if (!cleaned.startsWith("{")) {
+    const match = cleaned.match(/\{[\s\S]*\}/);
+    if (match) {
+      cleaned = match[0];
+    }
+  }
 
   return cleaned;
 }

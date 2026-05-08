@@ -1,0 +1,1 @@
+const payload = { messages: [{role: 'user', content: 'test'}], role: 'Frontend Engineer', level: 'Junior', name: 'Test', sessionId: 'test-session-123' }; fetch('http://localhost:3000/api/interview', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).then(res => res.text()).then(console.log).catch(console.error);  

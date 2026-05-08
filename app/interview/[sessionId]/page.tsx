@@ -78,28 +78,18 @@ export default function InterviewSessionPage() {
         }),
       });
 
-      if (!res.ok) throw new Error('Failed to start');
-
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error('No stream');
-
-      const decoder = new TextDecoder();
-      let fullText = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        fullText += decoder.decode(value, { stream: true });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => null);
+        throw new Error(errData?.error || 'Gagal memulai interview (Server Error)');
       }
 
-      fullText += decoder.decode();
-
+      const fullText = await res.text();
       let parsed: ClaudeResponse;
 
       try {
         parsed = JSON.parse(fullText);
       } catch {
-        throw new Error('Invalid AI response');
+        throw new Error('Format respons AI tidak valid');
       }
 
       setCurrentQuestion(parsed.qn);
@@ -159,28 +149,18 @@ export default function InterviewSessionPage() {
         }),
       });
 
-      if (!res.ok) throw new Error('Failed to get response');
-
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error('No stream');
-
-      const decoder = new TextDecoder();
-      let fullText = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        fullText += decoder.decode(value, { stream: true });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => null);
+        throw new Error(errData?.error || 'Gagal mengirim jawaban (Server Error)');
       }
 
-      fullText += decoder.decode();
-
+      const fullText = await res.text();
       let parsed: ClaudeResponse;
 
       try {
         parsed = JSON.parse(fullText);
       } catch {
-        throw new Error('Invalid AI response');
+        throw new Error('Format respons AI tidak valid');
       }
 
       setCurrentQuestion(parsed.qn);
@@ -260,15 +240,14 @@ export default function InterviewSessionPage() {
   };
 
   // ================= UI STATES =================
-  if (error && !session) {
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-        <p className="text-red-400">{error}</p>
-      </main>
-    );
-  }
-
   if (!session) {
+    if (error) {
+      return (
+        <main className="min-h-screen flex items-center justify-center">
+          <p className="text-red-400">{error}</p>
+        </main>
+      );
+    }
     return (
       <main className="min-h-screen flex items-center justify-center text-gray-400">
         Loading session...
@@ -284,6 +263,12 @@ export default function InterviewSessionPage() {
         level={session.level}
         currentQuestion={currentQuestion}
       />
+
+      {error && (
+        <div className="mx-6 mt-4 p-4 bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl text-center">
+          {error}
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto px-6 py-6 max-w-4xl mx-auto w-full">
         {chatItems.map((item, idx) => {

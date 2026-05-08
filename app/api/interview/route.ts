@@ -58,11 +58,14 @@ export async function POST(req: NextRequest) {
         'Cache-Control': 'no-cache',
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Interview API error:', error);
+    try {
+      require('fs').writeFileSync('api_error.log', String(error?.stack || error?.message || error));
+    } catch(e) {}
 
     return NextResponse.json(
-      { error: 'Terjadi kesalahan saat memproses interview' },
+      { error: `Terjadi kesalahan saat memproses interview: ${error?.message || 'Unknown error'}` },
       { status: 500 }
     );
   }

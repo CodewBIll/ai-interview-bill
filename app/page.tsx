@@ -27,15 +27,13 @@ export default function HomePage() {
       {/* Navigation */}
       <nav className="w-full px-6 py-4 flex items-center justify-between border-b border-white/5">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center overflow-hidden">
-            <img
-              src="/logo.png"
-              alt="logo"
-              className="w-full h-full object-contain filter invert brightness-150 opacity-70"
-            />
-          </div>
+         <img
+            src="/logo.png"
+            alt="logo"
+            className="h-8 w-auto object-contain"
+          />
           <span className="text-white font-semibold text-lg">
-            Boach AI
+            Interva AI
           </span>
         </div>
 
