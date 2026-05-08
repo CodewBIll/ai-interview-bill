@@ -10,7 +10,7 @@ export default function InterviewSetupPage() {
           <img
             src="/logo.png"
             alt="logo"
-            className="h-8 w-auto object-contain"
+            className="h-8 w-auto object-contain brightness-150"
           />
           <span className="text-white font-semibold text-lg">
             Interva AI
