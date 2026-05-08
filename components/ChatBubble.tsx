@@ -19,9 +19,11 @@ export default function ChatBubble({
     return (
       <div className="flex justify-start mb-4">
         <div className="flex items-start gap-3 max-w-[80%]">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-xs font-bold text-white shrink-0 mt-1">
-            AI
-          </div>
+          <img
+            src="/logo.png"
+            alt="logo"
+            className="h-8 w-auto object-contain brightness-150"
+          />
           <div className="bg-white/8 border border-white/10 rounded-2xl rounded-tl-sm px-5 py-4">
             <div className="flex gap-1.5">
               <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
