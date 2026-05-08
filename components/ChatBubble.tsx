@@ -47,11 +47,23 @@ export default function ChatBubble({
         <div
           className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-1 ${
             isAI
-              ? 'bg-gradient-to-br from-primary to-purple-500 text-white'
-              : 'bg-white/15 text-gray-300'
+              ? <img
+            src="/logo.png"
+            alt="logo"
+            className="h-8 w-auto object-contain brightness-150"
+          />
+              : <img
+            src="/logo.png"
+            alt="logo"
+            className="h-8 w-auto object-contain brightness-150"
+          />
           }`}
         >
-          {isAI ? 'AI' : senderName?.charAt(0)?.toUpperCase() || 'U'}
+          {isAI ? <img
+            src="/logo.png"
+            alt="logo"
+            className="h-8 w-auto object-contain brightness-150"
+          /> : senderName?.charAt(0)?.toUpperCase() || 'U'}
         </div>
 
         {/* Bubble */}
