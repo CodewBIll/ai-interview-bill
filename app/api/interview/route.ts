@@ -1,10 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { writeFile } from 'node:fs/promises';
 import { callInterview } from '@/lib/gemini';
 import { saveMessage } from '@/lib/db';
 import { Message } from '@/types/interview';
+import { getCurrentUser } from '@/lib/auth';
+
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return 'Unknown error';
+}
 
 export async function POST(req: NextRequest) {
   try {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
 
     const { messages, role, level, name, sessionId } = body as {
@@ -26,7 +45,7 @@ export async function POST(req: NextRequest) {
     // Save the latest user message to DB
     const lastUserMsg = messages[messages.length - 1];
     if (lastUserMsg?.role === 'user') {
-      await saveMessage(sessionId, lastUserMsg);
+      await saveMessage(user.id, sessionId, lastUserMsg);
     }
 
     // Call Gemini and get full JSON response
@@ -44,7 +63,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Save AI response to DB (async, don't await)
-    saveMessage(sessionId, {
+    saveMessage(user.id, sessionId, {
       role: 'assistant',
       content: responseText,
     }).catch((err) => {
@@ -58,14 +77,15 @@ export async function POST(req: NextRequest) {
         'Cache-Control': 'no-cache',
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Interview API error:', error);
-    try {
-      require('fs').writeFileSync('api_error.log', String(error?.stack || error?.message || error));
-    } catch(e) {}
+    const errorOutput =
+      error instanceof Error ? error.stack || error.message : String(error);
+
+    void writeFile('api_error.log', errorOutput).catch(() => {});
 
     return NextResponse.json(
-      { error: `Terjadi kesalahan saat memproses interview: ${error?.message || 'Unknown error'}` },
+      { error: `Terjadi kesalahan saat memproses interview: ${getErrorMessage(error)}` },
       { status: 500 }
     );
   }

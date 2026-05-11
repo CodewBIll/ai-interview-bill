@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { InterviewSession, Message, ClaudeResponse, Feedback } from '@/types/interview';
 import ScoreRadar from '@/components/ScoreRadar';
+import AuthActions from '@/components/AuthActions';
 
 interface QAItem {
   question: string;
@@ -169,6 +170,7 @@ export default function ResultsPage() {
             Interview Coach
           </span>
         </Link>
+        <AuthActions />
       </nav>
 
       <div className="flex-1 px-6 py-12 max-w-4xl mx-auto w-full">

@@ -1,1 +1,6 @@
-import { saveMessage } from './lib/db'; saveMessage('test-session', { role: 'user', content: 'hello' }).catch(console.error); 
+import { saveMessage } from './lib/db';
+
+saveMessage('test-user', 'test-session', {
+  role: 'user',
+  content: 'hello',
+}).catch(console.error);

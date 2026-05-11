@@ -6,6 +6,7 @@ import { InterviewSession, Message, ClaudeResponse, Feedback } from '@/types/int
 import ProgressHeader from '@/components/ProgressHeader';
 import ChatBubble from '@/components/ChatBubble';
 import FeedbackCard from '@/components/FeedbackCard';
+import AuthActions from '@/components/AuthActions';
 
 interface ChatItem {
   type: 'message' | 'feedback';
@@ -266,6 +267,12 @@ export default function InterviewSessionPage() {
   // ================= UI =================
   return (
     <main className="min-h-screen flex flex-col bg-background">
+      <div className="border-b border-white/5 px-6 py-3">
+        <div className="mx-auto flex w-full max-w-4xl items-center justify-end">
+          <AuthActions />
+        </div>
+      </div>
+
       <ProgressHeader
         role={session.role}
         level={session.level}

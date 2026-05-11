@@ -1,5 +1,6 @@
 import SetupForm from '@/components/SetupForm';
 import Link from 'next/link';
+import AuthActions from '@/components/AuthActions';
 
 export default function InterviewSetupPage() {
   return (
@@ -16,6 +17,7 @@ export default function InterviewSetupPage() {
             Interva AI
           </span>
         </Link>
+        <AuthActions />
       </nav>
 
       {/* Content */}

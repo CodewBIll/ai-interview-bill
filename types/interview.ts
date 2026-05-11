@@ -1,5 +1,6 @@
 export interface InterviewSession {
   id: string;
+  user_id?: string | null;
   name: string;
   role: string;
   level: string;

@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+
+import { createClient } from '@/lib/supabase/client';
 
 const ROLES = [
   'Frontend Engineer',
@@ -36,6 +38,26 @@ export default function SetupForm() {
   const [error, setError] = useState('');
 
   const isReady = name.trim() && selectedRole && selectedLevel;
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    async function hydrateName() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      const metadataName = user?.user_metadata?.full_name;
+      const fallbackName =
+        typeof metadataName === 'string' && metadataName.trim()
+          ? metadataName.trim()
+          : user?.email?.split('@')[0] ?? '';
+
+      setName((currentName) => currentName || fallbackName);
+    }
+
+    void hydrateName();
+  }, []);
 
   const handleSubmit = async () => {
     if (!isReady || isSubmitting) return;

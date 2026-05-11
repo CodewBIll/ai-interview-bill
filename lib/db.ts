@@ -12,14 +12,36 @@ const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
   },
 });
 
+async function assertSessionOwnership(
+  userId: string,
+  sessionId: string
+): Promise<void> {
+  const { data, error } = await supabaseAdmin
+    .from('sessions')
+    .select('id')
+    .eq('id', sessionId)
+    .eq('user_id', userId)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Failed to verify session ownership: ${error.message}`);
+  }
+
+  if (!data) {
+    throw new Error('Session not found');
+  }
+}
+
 // ===================== SESSION =====================
 
 export async function createSession(
+  userId: string,
   data: Partial<InterviewSession>
 ): Promise<InterviewSession> {
   const { data: session, error } = await supabaseAdmin
     .from('sessions')
     .insert({
+      user_id: userId,
       name: data.name,
       role: data.role,
       level: data.level,
@@ -32,21 +54,27 @@ export async function createSession(
   return session as InterviewSession;
 }
 
-export async function getSession(id: string): Promise<InterviewSession> {
+export async function getSession(
+  userId: string,
+  id: string
+): Promise<InterviewSession> {
   const { data, error } = await supabaseAdmin
     .from('sessions')
     .select('*')
     .eq('id', id)
-    .single();
+    .eq('user_id', userId)
+    .maybeSingle();
 
   if (error) throw new Error(`Failed to get session: ${error.message}`);
+  if (!data) throw new Error('Session not found');
   return data as InterviewSession;
 }
 
-export async function getAllSessions(): Promise<InterviewSession[]> {
+export async function getAllSessions(userId: string): Promise<InterviewSession[]> {
   const { data, error } = await supabaseAdmin
     .from('sessions')
     .select('*')
+    .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
   if (error) throw new Error(`Failed to get sessions: ${error.message}`);
@@ -54,23 +82,31 @@ export async function getAllSessions(): Promise<InterviewSession[]> {
 }
 
 export async function updateSession(
+  userId: string,
   id: string,
   data: Partial<InterviewSession>
 ): Promise<void> {
-  const { error } = await supabaseAdmin
+  const { data: updated, error } = await supabaseAdmin
     .from('sessions')
     .update(data)
-    .eq('id', id);
+    .eq('id', id)
+    .eq('user_id', userId)
+    .select('id')
+    .maybeSingle();
 
   if (error) throw new Error(`Failed to update session: ${error.message}`);
+  if (!updated) throw new Error('Session not found');
 }
 
 // ===================== MESSAGES =====================
 
 export async function saveMessage(
+  userId: string,
   sessionId: string,
   message: Message
 ): Promise<void> {
+  await assertSessionOwnership(userId, sessionId);
+
   const { error } = await supabaseAdmin
     .from('messages')
     .insert({
@@ -82,7 +118,12 @@ export async function saveMessage(
   if (error) throw new Error(`Failed to save message: ${error.message}`);
 }
 
-export async function getMessages(sessionId: string): Promise<Message[]> {
+export async function getMessages(
+  userId: string,
+  sessionId: string
+): Promise<Message[]> {
+  await assertSessionOwnership(userId, sessionId);
+
   const { data, error } = await supabaseAdmin
     .from('messages')
     .select('role, content')
@@ -97,13 +138,18 @@ export async function getMessages(sessionId: string): Promise<Message[]> {
 // ===================== FEEDBACK =====================
 
 export async function saveFeedback(
+  userId: string,
   sessionId: string,
   feedback: string
 ): Promise<void> {
-  const { error } = await supabaseAdmin
+  const { data: updated, error } = await supabaseAdmin
     .from('sessions')
     .update({ feedback })
-    .eq('id', sessionId);
+    .eq('id', sessionId)
+    .eq('user_id', userId)
+    .select('id')
+    .maybeSingle();
 
   if (error) throw new Error(`Failed to save feedback: ${error.message}`);
+  if (!updated) throw new Error('Session not found');
 }

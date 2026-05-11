@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import AuthActions from '@/components/AuthActions';
 import { InterviewSession } from '@/types/interview';
 
 export default function DashboardPage() {
@@ -63,9 +64,12 @@ export default function DashboardPage() {
             Interva AI
           </span>
         </Link>
-        <Link href="/interview" className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors">
-          + Interview Baru
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/interview" className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors">
+            + Interview Baru
+          </Link>
+          <AuthActions />
+        </div>
       </nav>
 
       <div className="flex-1 px-6 py-10 max-w-6xl mx-auto w-full">

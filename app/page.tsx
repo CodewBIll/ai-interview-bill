@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import AuthActions from '@/components/AuthActions';
+
 const features = [
   {
     icon: 'bi bi-robot',
@@ -11,7 +13,7 @@ const features = [
     icon: 'bi bi-bar-chart',
     title: 'Feedback Real-time',
     description:
-      'Dapatkan skor dan feedback detail untuk setiap jawaban — teknis, kejelasan, dan relevansi. Perbaiki di setiap pertanyaan.',
+      'Dapatkan skor dan feedback detail untuk setiap jawaban teknis, kejelasan, dan relevansi. Perbaiki di setiap pertanyaan.',
   },
   {
     icon: 'bi bi-graph-up',
@@ -24,10 +26,9 @@ const features = [
 export default function HomePage() {
   return (
     <main className="flex-1 flex flex-col">
-      {/* Navigation */}
       <nav className="w-full px-6 py-4 flex items-center justify-between border-b border-white/5">
         <div className="flex items-center gap-2">
-         <img
+          <img
             src="/logo.png"
             alt="logo"
             className="h-8 w-auto object-contain brightness-150"
@@ -37,15 +38,9 @@ export default function HomePage() {
           </span>
         </div>
 
-        <Link
-          href="/dashboard"
-          className="text-gray-400 hover:text-white text-sm font-medium transition-colors"
-        >
-          Dashboard →
-        </Link>
+        <AuthActions />
       </nav>
 
-      {/* Hero Section */}
       <section className="flex-1 flex flex-col items-center justify-center px-6 py-20 relative overflow-hidden">
         <div className="relative z-10 text-center max-w-3xl mx-auto">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
@@ -78,7 +73,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Feature Cards */}
       <section className="px-6 pb-20">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
           {features.map((feature, i) => (
