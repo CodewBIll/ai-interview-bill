@@ -58,74 +58,74 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen flex flex-col">
       {/* Nav */}
-      <nav className="w-full px-6 py-4 flex items-center justify-between border-b border-white/5">
+      <nav className="w-full px-4 sm:px-6 py-4 flex items-center justify-between border-b border-white/5">
         <Link href="/" className="flex items-center gap-2">
           <img src="/logo.png" alt="logo" className="h-8 w-auto object-contain brightness-150" />
           <span className="text-white font-semibold text-lg">Interva AI</span>
         </Link>
-        <div className="flex items-center gap-3">
-          <Link href="/interview" className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link href="/interview" className="hidden md:inline-flex px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition-colors shrink-0">
             + Interview Baru
           </Link>
-          <Link href="/cv-screening" className="px-4 py-2 bg-white/5 border border-white/10 text-gray-200 text-sm font-medium rounded-lg hover:bg-white/10 transition-colors">
+          <Link href="/cv-screening" className="hidden md:inline-flex px-4 py-2 bg-white/5 border border-white/10 text-gray-200 text-sm font-medium rounded-lg hover:bg-white/10 transition-colors shrink-0">
             Screening CV
           </Link>
           <AuthActions />
         </div>
       </nav>
 
-      <div className="flex-1 px-6 py-10 max-w-6xl mx-auto w-full">
+      <div className="flex-1 px-4 sm:px-6 py-6 sm:py-10 max-w-6xl mx-auto w-full">
 
         {/* Page Title */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white">Dashboard</h1>
-          <p className="text-gray-500 mt-1 text-sm">Pantau progress interview dan riwayat screening CV kamu.</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">Dashboard</h1>
+          <p className="text-gray-500 mt-1 text-xs sm:text-sm">Pantau progress interview dan riwayat screening CV kamu.</p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-          <div className="glass-card rounded-2xl p-5">
-            <p className="text-gray-500 text-xs uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10">
+          <div className="glass-card rounded-2xl p-4 sm:p-5">
+            <p className="text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider mb-1 flex sm:mb-1.5 items-center gap-1.5">
               <i className="bi bi-camera-video text-primary" /> Total Sesi
             </p>
-            <p className="text-3xl font-bold text-white">{sessions.length}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{sessions.length}</p>
           </div>
-          <div className="glass-card rounded-2xl p-5">
-            <p className="text-gray-500 text-xs uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+          <div className="glass-card rounded-2xl p-4 sm:p-5">
+            <p className="text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider mb-1 flex sm:mb-1.5 items-center gap-1.5">
               <i className="bi bi-star text-amber-400" /> Rata-rata Skor
             </p>
-            <p className={`text-3xl font-bold ${scoreColor(avgScore)}`}>{avgScore || '-'}</p>
+            <p className={`text-2xl sm:text-3xl font-bold ${scoreColor(avgScore)}`}>{avgScore || '-'}</p>
           </div>
-          <div className="glass-card rounded-2xl p-5">
-            <p className="text-gray-500 text-xs uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+          <div className="glass-card rounded-2xl p-4 sm:p-5">
+            <p className="text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider mb-1 flex sm:mb-1.5 items-center gap-1.5">
               <i className="bi bi-briefcase text-purple-400" /> Role Terbanyak
             </p>
-            <p className="text-3xl font-bold text-white truncate">{topRole}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white truncate" title={topRole}>{topRole}</p>
           </div>
-          <div className="glass-card rounded-2xl p-5">
-            <p className="text-gray-500 text-xs uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+          <div className="glass-card rounded-2xl p-4 sm:p-5">
+            <p className="text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider mb-1 flex sm:mb-1.5 items-center gap-1.5">
               <i className="bi bi-file-earmark-check text-emerald-400" /> CV Discreened
             </p>
-            <p className="text-3xl font-bold text-white">{completedScreenings}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{completedScreenings}</p>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-6 bg-white/3 border border-white/8 rounded-2xl p-1 w-fit">
+        <div className="flex gap-1 mb-6 bg-white/3 border border-white/8 rounded-2xl p-1 w-full sm:w-fit overflow-x-auto">
           {tabs.map(tab => (
             <button
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-white/10 text-white shadow-sm'
                   : 'text-gray-400 hover:text-gray-200'
               }`}
             >
               <i className={tab.icon} />
-              {tab.label}
-              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
+              <span>{tab.label}</span>
+              <span className={`text-[10px] sm:text-xs px-1.5 py-0.5 rounded-full ${
                 activeTab === tab.id ? 'bg-white/10 text-gray-300' : 'bg-white/5 text-gray-500'
               }`}>
                 {tab.count}
@@ -159,12 +159,12 @@ export default function DashboardPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-white/8">
-                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Tanggal</th>
-                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Nama</th>
-                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Role</th>
-                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Level</th>
-                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Skor</th>
-                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Tanggal</th>
+                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Nama</th>
+                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Role</th>
+                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Level</th>
+                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Skor</th>
+                      <th className="text-left px-5 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -174,14 +174,14 @@ export default function DashboardPage() {
                         onClick={() => s.status === 'completed' ? router.push(`/results/${s.id}`) : null}
                         className={`border-b border-white/5 transition-colors ${s.status === 'completed' ? 'hover:bg-white/4 cursor-pointer' : 'opacity-60'}`}
                       >
-                        <td className="px-5 py-4 text-sm text-gray-400">{new Date(s.created_at).toLocaleDateString('id-ID')}</td>
-                        <td className="px-5 py-4 text-sm text-white font-medium">{s.name}</td>
-                        <td className="px-5 py-4 text-sm text-gray-300">{s.role}</td>
-                        <td className="px-5 py-4 text-sm text-gray-300">{s.level}</td>
-                        <td className={`px-5 py-4 text-sm font-bold ${scoreColor(s.overall_score)}`}>
+                        <td className="px-5 py-4 text-sm text-gray-400 whitespace-nowrap">{new Date(s.created_at).toLocaleDateString('id-ID')}</td>
+                        <td className="px-5 py-4 text-sm text-white font-medium whitespace-nowrap">{s.name}</td>
+                        <td className="px-5 py-4 text-sm text-gray-300 whitespace-nowrap">{s.role}</td>
+                        <td className="px-5 py-4 text-sm text-gray-300 whitespace-nowrap">{s.level}</td>
+                        <td className={`px-5 py-4 text-sm font-bold whitespace-nowrap ${scoreColor(s.overall_score)}`}>
                           {s.overall_score ?? '-'}
                         </td>
-                        <td className="px-5 py-4">
+                        <td className="px-5 py-4 whitespace-nowrap">
                           <span className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${statusBadge(s.status)}`}>
                             {statusLabel(s.status)}
                           </span>
@@ -207,30 +207,34 @@ export default function DashboardPage() {
           ) : (
             <div className="grid gap-4">
               {screenings.map((s) => (
-                <div key={s.id} className="glass-card rounded-2xl p-5 hover:bg-white/5 transition-all">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-4 min-w-0">
-                      <div className="w-11 h-11 rounded-xl bg-purple-400/10 border border-purple-400/20 flex items-center justify-center shrink-0">
+                <div key={s.id} className="glass-card rounded-2xl p-4 sm:p-5 hover:bg-white/5 transition-all">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+                    <div className="flex items-start sm:items-center gap-3 sm:gap-4 min-w-0">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-purple-400/10 border border-purple-400/20 flex items-center justify-center shrink-0">
                         <i className="bi bi-file-earmark-pdf text-purple-400 text-lg" />
                       </div>
                       <div className="min-w-0">
-                        <p className="font-semibold text-white truncate">{s.cv_file_name}</p>
-                        <p className="text-sm text-gray-500 mt-0.5">
-                          {s.email} · {formatFileSize(s.cv_file_size)} · {new Date(s.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        </p>
+                        <p className="font-semibold text-sm sm:text-base text-white truncate max-w-[240px] sm:max-w-none" title={s.cv_file_name}>{s.cv_file_name}</p>
+                        <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-gray-500 mt-0.5 sm:mt-1">
+                          <span className="truncate max-w-[120px] sm:max-w-none">{s.email}</span>
+                          <span>·</span>
+                          <span>{formatFileSize(s.cv_file_size)}</span>
+                          <span>·</span>
+                          <span className="whitespace-nowrap">{new Date(s.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                        </div>
                       </div>
                     </div>
-                    <span className={`shrink-0 px-3 py-1 rounded-full text-xs font-semibold border ${statusBadge(s.status)}`}>
+                    <span className={`self-start sm:self-auto shrink-0 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold border ${statusBadge(s.status)}`}>
                       {statusLabel(s.status)}
                     </span>
                   </div>
                   {s.result_summary && (
                     <div className="mt-4 pt-4 border-t border-white/8">
-                      <p className="text-sm text-gray-400 leading-relaxed">{s.result_summary}</p>
+                      <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">{s.result_summary}</p>
                     </div>
                   )}
                   {s.error_message && (
-                    <div className="mt-3 flex items-start gap-2 text-sm text-red-300">
+                    <div className="mt-3 flex items-start gap-2 text-xs sm:text-sm text-red-300">
                       <i className="bi bi-exclamation-triangle-fill mt-0.5 shrink-0" />
                       <p>{s.error_message}</p>
                     </div>

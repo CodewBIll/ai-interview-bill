@@ -80,26 +80,26 @@ export default function CvScreeningForm() {
     <div className="flex flex-col items-center w-full">
 
       {/* Page Header */}
-      <div className="text-center mb-12 animate-fadeIn">
-        <div className="inline-flex items-center gap-2 rounded-full border border-purple-400/20 bg-purple-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.28em] text-purple-300 mb-5">
+      <div className="text-center mb-8 sm:mb-12 animate-fadeIn">
+        <div className="inline-flex items-center gap-2 rounded-full border border-purple-400/20 bg-purple-400/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.28em] text-purple-300 mb-4 sm:mb-5">
           <i className="bi bi-stars" />
           CV Screening
         </div>
-        <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
+        <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-3 sm:mb-4">
           Screening CV{' '}
           <span className="gradient-text">Otomatis</span>
         </h1>
-        <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
+        <p className="text-gray-400 text-sm sm:text-lg max-w-xl mx-auto leading-relaxed px-4">
           Upload CV kamu dan biarkan AI menganalisis kualifikasi, kelebihan, dan rekomendasi role yang paling sesuai.
         </p>
       </div>
 
       {/* Step Indicators */}
-      <div className="flex items-center gap-0 mb-12 w-full max-w-lg">
+      <div className="flex items-center gap-0 mb-8 sm:mb-12 w-full max-w-lg px-4 sm:px-0">
         {steps.map((step, i) => (
           <div key={i} className="flex items-center flex-1">
             <div className="flex flex-col items-center flex-1">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm mb-2 transition-all ${
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm mb-2 transition-all ${
                 i === 0 && email.trim() ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/30' :
                 i === 1 && file ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/30' :
                 i === 2 && success ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30' :
@@ -107,10 +107,10 @@ export default function CvScreeningForm() {
               }`}>
                 <i className={success && i === 2 ? 'bi bi-check-lg' : step.icon} />
               </div>
-              <p className="text-xs text-gray-500 text-center leading-tight hidden sm:block">{step.label}</p>
+              <p className="text-[10px] sm:text-xs text-gray-500 text-center leading-tight hidden sm:block">{step.label}</p>
             </div>
             {i < steps.length - 1 && (
-              <div className={`h-px flex-1 mx-2 mb-5 transition-all ${
+              <div className={`h-px flex-1 mx-1.5 sm:mx-2 mb-2 sm:mb-5 transition-all ${
                 (i === 0 && email.trim()) || (i === 1 && file) ? 'bg-purple-500/50' : 'bg-white/10'
               }`} />
             )}
@@ -119,7 +119,7 @@ export default function CvScreeningForm() {
       </div>
 
       {/* Main Form Card */}
-      <div className="w-full max-w-lg glass-card rounded-3xl p-8 animate-fadeIn">
+      <div className="w-full max-w-lg glass-card rounded-3xl p-5 sm:p-8 animate-fadeIn">
 
         {/* Success State */}
         {success ? (

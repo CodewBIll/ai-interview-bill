@@ -92,24 +92,28 @@ export default function AuthActions() {
   }
 
   return (
-    <div className="flex items-center gap-3">
-      <div className="hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-200 sm:block">
+    <div className="flex items-center gap-2 sm:gap-3">
+      <div className="hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-200 lg:block">
         <span className="font-medium text-white">{user.name || user.email?.split('@')[0]}</span>
       </div>
       <Link
         href="/dashboard"
-        className="rounded-lg border border-primary/50 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition-all hover:bg-primary/20 hover:border-primary"
+        className="rounded-lg border border-primary/50 bg-primary/10 px-3 sm:px-4 py-2 text-sm font-semibold text-primary transition-all hover:bg-primary/20 hover:border-primary flex items-center gap-1.5 shrink-0"
+        title="Dashboard"
       >
-        Dashboard
+        <i className="bi bi-grid-fill" />
+        <span className="hidden sm:inline">Dashboard</span>
       </Link>
       <button
         type="button"
         onClick={() => {
           void handleSignOut();
         }}
-        className="rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-gray-200 transition-colors hover:bg-white/5 hover:text-white"
+        className="rounded-lg border border-white/10 px-3 sm:px-4 py-2 text-sm font-medium text-gray-200 transition-colors hover:bg-white/5 hover:text-white flex items-center gap-1.5 shrink-0"
+        title="Keluar"
       >
-        Keluar
+        <i className="bi bi-box-arrow-right" />
+        <span className="hidden sm:inline">Keluar</span>
       </button>
     </div>
   );
