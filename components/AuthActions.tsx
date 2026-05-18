@@ -96,6 +96,12 @@ export default function AuthActions() {
       <div className="hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-200 sm:block">
         <span className="font-medium text-white">{user.name || user.email?.split('@')[0]}</span>
       </div>
+      <Link
+        href="/dashboard"
+        className="rounded-lg border border-primary/50 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary transition-all hover:bg-primary/20 hover:border-primary"
+      >
+        Dashboard
+      </Link>
       <button
         type="button"
         onClick={() => {

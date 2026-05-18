@@ -21,6 +21,12 @@ const features = [
     description:
       'Lihat riwayat semua sesi interview, bandingkan skor, dan pantau perkembangan kemampuan interview kamu dari waktu ke waktu.',
   },
+  {
+    icon: 'bi bi-file-earmark-text',
+    title: 'CV Screening Otomatis',
+    description:
+      'Upload CV dan dapatkan evaluasi AI recruiter lengkap beserta rekomendasi role yang paling sesuai.',
+  },
 ];
 
 export default function HomePage() {
@@ -51,8 +57,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
-            Simulasi interview realistis dengan AI interviewer profesional.
-            Dapatkan feedback instant untuk setiap jawaban.
+            Simulasi interview realistis, screening CV otomatis, dan feedback instan untuk membantu kamu lolos proses rekrutmen lebih percaya diri.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -64,17 +69,17 @@ export default function HomePage() {
             </Link>
 
             <Link
-              href="/dashboard"
+              href="/cv-screening"
               className="px-8 py-4 bg-white/5 border border-white/10 text-gray-300 font-semibold text-lg rounded-xl"
             >
-              Lihat Dashboard
+              Screening CV
             </Link>
           </div>
         </div>
       </section>
 
       <section className="px-6 pb-20">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {features.map((feature, i) => (
             <div
               key={i}

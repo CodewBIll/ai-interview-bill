@@ -75,11 +75,33 @@ create index if not exists messages_session_id_idx on messages(session_id);
 create index if not exists sessions_created_at_idx on sessions(created_at desc);
 create index if not exists sessions_user_id_created_at_idx on sessions(user_id, created_at desc);
 
+create table if not exists cv_screenings (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  email text not null,
+  cv_file_name text not null,
+  cv_file_type text,
+  cv_file_size bigint not null,
+  status text not null default 'pending'
+    check (status in ('pending', 'submitted', 'processing', 'completed', 'failed')),
+  n8n_execution_id text,
+  result_summary text,
+  error_message text,
+  response_payload jsonb,
+  created_at timestamptz default now() not null,
+  updated_at timestamptz default now() not null
+);
+
+create index if not exists cv_screenings_user_id_created_at_idx
+  on cv_screenings(user_id, created_at desc);
+
 grant select, insert, update, delete on table sessions to authenticated, service_role;
 grant select, insert, update, delete on table messages to authenticated, service_role;
+grant select, insert, update, delete on table cv_screenings to authenticated, service_role;
 
 alter table sessions enable row level security;
 alter table messages enable row level security;
+alter table cv_screenings enable row level security;
 
 drop policy if exists "Allow all operations on sessions" on sessions;
 drop policy if exists "Allow all operations on messages" on messages;
@@ -89,6 +111,10 @@ drop policy if exists "Users can update their own sessions" on sessions;
 drop policy if exists "Users can delete their own sessions" on sessions;
 drop policy if exists "Users can view their own messages" on messages;
 drop policy if exists "Users can create messages for their own sessions" on messages;
+drop policy if exists "Users can view their own cv screenings" on cv_screenings;
+drop policy if exists "Users can create their own cv screenings" on cv_screenings;
+drop policy if exists "Users can update their own cv screenings" on cv_screenings;
+drop policy if exists "Users can delete their own cv screenings" on cv_screenings;
 
 create policy "Users can view their own sessions"
 on sessions
@@ -140,6 +166,31 @@ with check (
       and sessions.user_id = auth.uid()
   )
 );
+
+create policy "Users can view their own cv screenings"
+on cv_screenings
+for select
+to authenticated
+using (auth.uid() = user_id);
+
+create policy "Users can create their own cv screenings"
+on cv_screenings
+for insert
+to authenticated
+with check (auth.uid() = user_id);
+
+create policy "Users can update their own cv screenings"
+on cv_screenings
+for update
+to authenticated
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);
+
+create policy "Users can delete their own cv screenings"
+on cv_screenings
+for delete
+to authenticated
+using (auth.uid() = user_id);
 
 -- For existing projects with legacy rows, backfill `user_id` first, then harden:
 -- alter table sessions alter column user_id set not null;
