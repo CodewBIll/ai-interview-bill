@@ -11,7 +11,7 @@ export async function callInterview(
   name: string
 ): Promise<string> {
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
+    model: "gemini-1.5-pro",
     systemInstruction: buildSystemPrompt(role, level, name),
     generationConfig: {
       temperature: 0.7,
